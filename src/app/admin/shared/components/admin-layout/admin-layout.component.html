@@ -1,0 +1,23 @@
+<nav class="navbar-expand-lg navbar navbar-dark bg-primary">
+  <a class="navbar-brand" routerLink="/">Angular Admin</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/admin', 'dashboard']">Dashboard</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/admin', 'create']">Create</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="logout($event)">Logout</a>
+      </li>
+    </ul>
+  </div>
+
+</nav>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

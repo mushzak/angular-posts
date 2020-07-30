@@ -1,5 +1,11 @@
 <form class="form-signin" style="margin-top: 20px" [formGroup]="form" (ngSubmit)="submit()">
   <div class="form-label-group">
+    <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+      {{error}}
+    </div>
+    <div class="alert alert-info" *ngIf="message">
+      {{message}}
+    </div>
     <label for="inputEmail">Email address</label>
     <input type="email" id="inputEmail" class="form-control" placeholder="Email address" formControlName="email">
     <div class="alert alert-danger" role="alert" *ngIf="form.get('email').touched && form.get('email').invalid">

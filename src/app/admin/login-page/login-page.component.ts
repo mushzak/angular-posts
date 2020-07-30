@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "../../shared/interfaces";
 import {AuthService} from "../shared/services/auth.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Component({
   selector: 'app-login-page',
@@ -11,8 +11,13 @@ import {Router} from "@angular/router";
 })
 export class LoginPageComponent implements OnInit {
   form: FormGroup;
+  message: string;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    public auth: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+    ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -23,6 +28,13 @@ export class LoginPageComponent implements OnInit {
       password: new FormControl(null, [
         Validators.required, Validators.minLength(6)
       ]),
+    });
+    this.route.queryParams.subscribe( (params: Params) => {
+      if(params['loginAgain']){
+        this.message = "Please login";
+      }else if(params['authFailed']){
+        this.message = "Auth Failed";
+      }
     })
   }
 
@@ -32,11 +44,10 @@ export class LoginPageComponent implements OnInit {
     }
     const user: User = {
       email: this.form.value.email,
-      password: this.form.value.email
+      password: this.form.value.password
 
     }
     this.auth.login(user).subscribe( (response) => {
-
       this.form.reset();
       this.router.navigate(['/admin', 'dashboard'])
     })
